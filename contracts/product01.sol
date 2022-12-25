@@ -19,9 +19,6 @@ contract product01 {
         console.log("msg.value @send_premium", msg.value);
         require(msg.value > 0, "Premium should be greater than 0 wei.");
 
-        // console.log("riskpool @send_premium", riskpool);
-        // riskpool.transfer(msg.value);
-
         emit eventPremiumSent(msg.sender, block.timestamp, msg.value);
     }
 
