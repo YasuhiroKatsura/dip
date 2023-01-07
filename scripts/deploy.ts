@@ -1,4 +1,4 @@
-import { ethers } from "hardhat";
+import { ethers, network, run } from "hardhat";
 
 async function main() {
   const contractFactory = await ethers.getContractFactory("product01");
@@ -6,7 +6,17 @@ async function main() {
 
   await contract.deployed();
 
-  console.log("Contract deployed with address: ", contract.address);
+  console.log("Deployed network: ", network.name);
+  console.log("Contract address: ", contract.address);
+
+  console.log("Verifying contract on Etherscan ...");
+  try {
+    await run(`verify:verify`, {
+      address: contract.address,
+    });
+  } catch (error) {
+    console.log("No Exploler for local network.")
+  }
 }
 
 // We recommend this pattern to be able to use async/await everywhere

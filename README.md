@@ -18,3 +18,9 @@ $ npx hardhat test test/product01.ts    # test/product01.ts
 $ npx hardhat run scripts/deploy.ts    # to default-set network (hardhat network)
 $ npx hardhat run scripts/deploy.ts --network goerli    # to Eth Goerli
 ```
+
+## Varify contract with an Exploler
+```
+$ npx hardhat verify --network goerli <contract address>    # varify with Etherscan
+$ npx hardhat verify --network arbitrumGoerli <contract address>    # varify with Arbiscan
+```
