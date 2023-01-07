@@ -1,18 +1,22 @@
-import { ethers } from "hardhat";
+import { ethers, network, run } from "hardhat";
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
-  const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
+  const contractFactory = await ethers.getContractFactory("product01");
+  const contract = await contractFactory.deploy();
 
-  const lockedAmount = ethers.utils.parseEther("1");
+  await contract.deployed();
 
-  const Lock = await ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
+  console.log("Deployed network: ", network.name);
+  console.log("Contract address: ", contract.address);
 
-  await lock.deployed();
-
-  console.log(`Lock with 1 ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`);
+  console.log("Verifying contract on Etherscan ...");
+  try {
+    await run(`verify:verify`, {
+      address: contract.address,
+    });
+  } catch (error) {
+    console.log("No Exploler for local network.")
+  }
 }
 
 // We recommend this pattern to be able to use async/await everywhere
