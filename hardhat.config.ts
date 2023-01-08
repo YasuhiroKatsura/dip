@@ -8,8 +8,8 @@ const {
   METAMASK_PRIVATE_KEY,
   ALCHEMY_ETHGOERLI_ENDPOINT,
   ALCHEMY_ARBGOERLI_ENDPOINT,
-  ETHERSCAN_API_KEY,
-  ARBISCAN_API_KEY,
+  ETHERSCAN_APIKEY,
+  ARBISCAN_APIKEY,
 } = process.env;
 
 const config: HardhatUserConfig = {
@@ -29,8 +29,8 @@ const config: HardhatUserConfig = {
   },
   etherscan: {
     apiKey: {
-      goerli: ETHERSCAN_API_KEY,
-      arbitrumGoerli: ARBISCAN_API_KEY,
+      goerli: ETHERSCAN_APIKEY,
+      arbitrumGoerli: ARBISCAN_APIKEY,
     },
   },
 };
