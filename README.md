@@ -24,3 +24,8 @@ $ npx hardhat run scripts/deploy.ts --network goerli    # to Eth Goerli
 $ npx hardhat verify --network goerli <contract address>    # varify with Etherscan
 $ npx hardhat verify --network arbitrumGoerli <contract address>    # varify with Arbiscan
 ```
+
+## Run Contract Method on Test Net
+```
+$ npx hardhat run scripts/send_premium.ts 
+```
