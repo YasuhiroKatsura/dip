@@ -13,13 +13,14 @@ async function main() {
   const contractABI = abi.abi;
 
   // Alchemy -> Goerli
-  // const provider = new hre.ethers.getDefaultProvider(
-  //   "goerli", {
-  //     alchemy: process.env.ALCHEMY_ETHGOERLI_APIKEY
-  //   }
+  // console.log("network: Ethereum Goerli")
+  // const provider = new hre.ethers.providers.AlchemyProvider(
+  //   "goerli",
+  //   process.env.ALCHEMY_ETHGOERLI_APIKEY
   // );
 
   // Alchemy -> Arbitrum Goerli
+  console.log("network: Arbitrum Goerli")
   const provider = new hre.ethers.providers.AlchemyProvider(
     "arbitrum-goerli",
     process.env.ALCHEMY_ARBGOERLI_APIKEY
@@ -32,15 +33,19 @@ async function main() {
   console.log("current balance of insured: ", await getBalance(provider, signer.address), "ETH");
   console.log("current balance of contract: ", await getBalance(provider, product01.address), "ETH");
 
-  // run contract method
   const premium = hre.ethers.utils.parseEther("0.00001");
+
+  // run contract method
+  const startTime = performance.now();
   const txn = await product01.send_premium({value:premium});
+  const endTime = performance.now();
 
   await txn.wait().then(async (receipt) => {
     if (receipt && receipt.status == 1) {
       console.log('resulted hash: ', txn.hash);
       console.log("updated balance of insured: ", await getBalance(provider, signer.address), "ETH");
       console.log("updated balance of contract: ", await getBalance(provider, product01.address), "ETH");
+      console.log("processing time: ", endTime - startTime);
     } else {
       console.log('transaction failed.');
     }
